@@ -1,0 +1,7 @@
+Common
+PHPPresentation
+unrpyc
+*.pptx
+*.json
+.DS_Store
+thumbs.db
