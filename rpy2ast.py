@@ -221,6 +221,20 @@ def fixup(ast):
                 'generic', 'hayley', 'heather', 'izaac', 'lawe', 'mekki',
                 'placeholder', 'tanya', 'wallace'
             ]
+            SPRITE_OFFSETS = {
+                'caprice': 160,
+                'mekki': -80,
+                'izaac': 100,
+                'wallace': 175,
+                'generic': 200,
+                'hayley': 130,
+                'lawe': 150,
+                'tanya': 40,
+                'darren': 175,
+                'heather': -50,
+                'allison': -55,
+                'eileen': -70
+            }
             if node['image'][0] == 'bg' and node['type'] != 'hide':
                 at = node.get('at', {})
                 at.setdefault('xalign', 0.5)
@@ -230,6 +244,13 @@ def fixup(ast):
                 node['image'][0] = FIXUPS[node['image'][0]]
             if node['image'][0] in SPRITES:
                 node['image'].insert(0, 'sprites')
+                if node['image'][1] in SPRITE_OFFSETS:
+                    yoff = SPRITE_OFFSETS[node['image'][1]]
+                    if 'at' in node and 'yoffset' in node['at']:
+                        node['at']['yoffset'] = str(int(node['at']['yoffset']) + yoff)
+                    else:
+                        node.setdefault('at', {})
+                        node['at']['yoffset'] = str(yoff)
             if node['image'][0].startswith('phone') or node['image'][0].startswith('call') or node['image'][0].startswith('contact'):
                 del ast[i + offset]
                 offset -= 1
