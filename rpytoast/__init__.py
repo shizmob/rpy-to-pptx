@@ -89,7 +89,7 @@ def resolve(ast, resource_dirs):
                 at.update(node['at'])
                 node['at'] = at
             if 'image' in node and node['type'] != 'hide':
-                res = find_resource(node['image'], resource_dirs)
+                res = find_resource(node['image'], resource_dirs, ast['images'])
                 if res:
                     node['image'] = res
                 else:
@@ -100,8 +100,12 @@ def resolve(ast, resource_dirs):
 
 RESOURCE_CACHE = {}
 
-def find_resource(name, dirs):
-    name = '/'.join(name) + '.*'
+def find_resource(name, dirs, images):
+    key = tuple(name)
+    if key in images and images[key]['value']:
+        name = images[key]['value']
+    else:
+        name = '/'.join(name) + '.*'
 
     if name not in RESOURCE_CACHE:
         for path in dirs:

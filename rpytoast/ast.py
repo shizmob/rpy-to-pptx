@@ -1,6 +1,7 @@
 import re
 import renpy
 from atl import parse_imspec, parse_atl
+from code import parse_code
 
 
 WALKERS = {}
@@ -50,11 +51,11 @@ def init(node):
 
 @walker(renpy.ast.Define)
 def define(node):
-    return [{'type': 'image', 'name': tuple([node.varname]), 'value': unicode(node.code.source)}]
+    return [{'type': 'image', 'name': tuple([node.varname]), 'value': parse_code(node.code)}]
 
 @walker(renpy.ast.Image)
 def image(node):
-    b = {'type': 'image', 'name': tuple(node.imgname), 'value': unicode(node.code.source)}
+    b = {'type': 'image', 'name': tuple(node.imgname), 'value': parse_code(node.code)}
     b.update(parse_atl(node.atl, b))
     return [b]
 
