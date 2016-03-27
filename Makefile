@@ -1,5 +1,6 @@
-RESOURCES=../work-in-progress-demo/game
-SOURCES=$(wildcard $(RESOURCES)/scripts/en/oliver_*.rpyc)
+GAME_RESOURCES=../work-in-progress-demo/game
+RESOURCE_DIRS=$(GAME_RESOURCES) resources
+SOURCES=$(shell find $(GAME_RESOURCES) -name '*.rpyc')#$(wildcard $(RESOURCES)/scripts/en/oliver_*.rpyc)
 PHP=php
 PYTHON=python
 PRESENTATION=presentation.pptx
@@ -14,11 +15,11 @@ distclean: clean
 
 $(PRESENTATION): $(AST) ast2pptx.php Common PHPPresentation
 	@echo [ GEN] $@
-	@$(PHP) ast2pptx.php $(AST) $@ $(RESOURCES) resources
+	@$(PHP) ast2pptx.php $(AST) $@ $(RESOURCE_DIRS)
 
-$(AST): unrpyc rpy2ast.py $(SOURCES)
+$(AST): unrpyc rpy2ast.py $(wildcard rpytoast/*.py) $(SOURCES)
 	@echo [ GEN] $@
-	@$(PYTHON) rpy2ast.py $@ $(SOURCES)
+	@$(PYTHON) rpy2ast.py $@ $(SOURCES) $(RESOURCE_DIRS)
 
 unrpyc:
 	git clone --depth=1 https://github.com/CensoredUsername/unrpyc $@

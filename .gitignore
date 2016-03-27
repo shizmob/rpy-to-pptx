@@ -1,6 +1,7 @@
 Common
 PHPPresentation
 unrpyc
+*.pyc
 *.pptx
 *.json
 .DS_Store
