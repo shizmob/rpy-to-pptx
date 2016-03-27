@@ -30,4 +30,4 @@ Common:
 
 PHPPresentation:
 	git clone --depth=1 https://github.com/PHPOffice/PHPPresentation $@
-	cd $@ ; patch -p1 < ../phppresentation-deduplicate-resources.patch ; cd ..
+	cd $@ ; patch -p1 < ../phppresentation-deduplicate-resources.patch ../phppresentation-flip-support.patch ; cd ..

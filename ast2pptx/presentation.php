@@ -183,6 +183,7 @@ class Presentation
 
   protected function emitImage($slide, $node) {
     list($x, $y, $w, $h) = calculateGeometry($node['image'], $node['at'], $this->width, $this->height);
+    list($xf, $yf) = calculateFlips($node['at']);
     $image = $slide->createDrawingShape();
     $image
       ->setName($s)
@@ -190,7 +191,9 @@ class Presentation
       ->setHeight($h)
       ->setWidth($w)
       ->setOffsetX($x)
-      ->setOffsetY($y);
+      ->setOffsetY($y)
+      ->setFlippedHorizontally($xf)
+      ->setFlippedVertically($yf);
   }
 
 }

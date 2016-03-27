@@ -81,7 +81,7 @@ def resolve(ast, resource_dirs):
                     at.update(ast['transforms'][transform]['at'])
                 at.update(node['at'])
                 node['at'] = at
-            if 'image' in node:
+            if 'image' in node and node['type'] != 'hide':
                 res = find_resource(node['image'], resource_dirs)
                 if res:
                     node['image'] = res

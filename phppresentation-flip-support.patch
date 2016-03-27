@@ -1,0 +1,114 @@
+diff -Nru PHPPresentation-develop/src/PhpPresentation/AbstractShape.php PHPpresentation-patched/src/PhpPresentation/AbstractShape.php
+--- PHPPresentation-develop/src/PhpPresentation/AbstractShape.php	2016-03-17 15:44:41.000000000 +0100
++++ PHPpresentation-patched/src/PhpPresentation/AbstractShape.php	2016-03-28 01:05:10.000000000 +0200
+@@ -83,6 +83,20 @@
+     protected $rotation;
+ 
+     /**
++     * Flipped Horizontally
++     *
++     * @var boolean
++     */
++    protected $flippedHorizontally;
++
++    /**
++     * Flipped Vertically
++     *
++     * @var boolean
++     */
++    protected $flippedVertically;
++
++    /**
+      * Shadow
+      *
+      * @var \PhpOffice\PhpPresentation\Style\Shadow
+@@ -115,6 +129,8 @@
+         $this->width     = 0;
+         $this->height    = 0;
+         $this->rotation  = 0;
++        $this->flippedHorizontally = false;
++        $this->flippedVertically   = false;
+         $this->fill      = new Style\Fill();
+         $this->border    = new Style\Border();
+         $this->shadow    = new Style\Shadow();
+@@ -311,6 +327,50 @@
+     }
+ 
+     /**
++     * Get Horizontal Flip
++     *
++     * @return boolean
++     */
++    public function isFlippedHorizontally()
++    {
++      return $this->flippedHorizontally;
++    }
++
++    /**
++     * Set Horizontal Flip
++     *
++     * @param  int                 $pValue
++     * @return self
++     */
++    public function setFlippedHorizontally($pValue = false)
++    {
++      $this->flippedHorizontally = $pValue;
++      return $this;
++    }
++
++    /**
++     * Get Vertical Flip
++     *
++     * @return boolean
++     */
++    public function isFlippedVertically()
++    {
++      return $this->flippedVertically;
++    }
++
++    /**
++     * Set Vertical Flip
++     *
++     * @param  int                 $pValue
++     * @return self
++     */
++    public function setFlippedVertically($pValue = false)
++    {
++      $this->flippedVertically = $pValue;
++      return $this;
++    }
++
++    /**
+      * Get Fill
+      *
+      * @return \PhpOffice\PhpPresentation\Style\Fill
+diff -Nru PHPPresentation-develop/src/PhpPresentation/Writer/PowerPoint2007/PptSlides.php PHPpresentation-patched/src/PhpPresentation/Writer/PowerPoint2007/PptSlides.php
+--- PHPPresentation-develop/src/PhpPresentation/Writer/PowerPoint2007/PptSlides.php	2016-03-17 15:44:41.000000000 +0100
++++ PHPpresentation-patched/src/PhpPresentation/Writer/PowerPoint2007/PptSlides.php	2016-03-28 00:59:03.000000000 +0200
+@@ -640,6 +640,8 @@
+         // p:xfrm
+         $objWriter->startElement('p:xfrm');
+         $objWriter->writeAttribute('rot', CommonDrawing::degreesToAngle($shape->getRotation()));
++        $objWriter->writeAttribute('flipH', ($shape->isFlippedHorizontally() ? 'true' : 'false'));
++        $objWriter->writeAttribute('flipV', ($shape->isFlippedVertically() ? 'true' : 'false'));
+ 
+         // a:off
+         $objWriter->startElement('a:off');
+@@ -740,6 +742,8 @@
+         // a:xfrm
+         $objWriter->startElement('a:xfrm');
+         $objWriter->writeAttribute('rot', CommonDrawing::degreesToAngle($shape->getRotation()));
++        $objWriter->writeAttribute('flipH', ($shape->isFlippedHorizontally() ? 'true' : 'false'));
++        $objWriter->writeAttribute('flipV', ($shape->isFlippedVertically() ? 'true' : 'false'));
+ 
+         // a:off
+         $objWriter->startElement('a:off');
+@@ -820,6 +824,8 @@
+         // p:sp\p:spPr\a:xfrm
+         $objWriter->startElement('a:xfrm');
+         $objWriter->writeAttribute('rot', CommonDrawing::degreesToAngle($shape->getRotation()));
++        $objWriter->writeAttribute('flipH', ($shape->isFlippedHorizontally() ? 'true' : 'false'));
++        $objWriter->writeAttribute('flipV', ($shape->isFlippedVertically() ? 'true' : 'false'));
+ 
+         // p:sp\p:spPr\a:xfrm\a:off
+         $objWriter->startElement('a:off');
