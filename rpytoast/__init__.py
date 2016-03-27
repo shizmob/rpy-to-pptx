@@ -5,8 +5,10 @@ import ast, atl, site
 
 def index(nodes):
     labels = {}
-    transforms = {}
     images = {}
+    transforms = {}
+
+    site.defaults(labels, images, transforms)
 
     label = None
     for node in nodes:
@@ -75,6 +77,11 @@ def resolve(ast, resource_dirs):
             if 'transforms' in node:
                 at = {}
                 for transform in node['transforms']:
+                    if '(' in transform:
+                        transform, params = transform.split('(')
+                        params = params.rstrip(')').split()
+                    else:
+                        params = []
                     if transform not in ast['transforms']:
                         print >>sys.stderr, 'Unknown ATL transform: {}'.format(transform)
                         continue
@@ -86,7 +93,8 @@ def resolve(ast, resource_dirs):
                 if res:
                     node['image'] = res
                 else:
-                    print >>sys.stderr, 'Can\'t find resource: {}'.format(node['image'])
+                    if len(node['image']) > 1:
+                        print >>sys.stderr, 'Can\'t find resource: {}'.format(node['image'])
                     node['image'] = None
 
 
