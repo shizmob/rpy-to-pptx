@@ -161,7 +161,7 @@ class Presentation
     $slide = $this->presentation->createSlide();
     foreach ($this->showOrder as $tag) {
       $entry = $this->showing[$tag];
-      if (isset($this->showing['cgs']) && $tag != 'cgs')
+      if (isset($this->showing['cg']) && $tag != 'cg')
         continue;
       $this->emitImage($slide, $entry);
     }

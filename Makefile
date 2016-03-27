@@ -13,7 +13,7 @@ clean:
 distclean: clean
 	@rm -rf unrpyc Common PHPPresentation
 
-$(PRESENTATION): $(AST) ast2pptx.php Common PHPPresentation
+$(PRESENTATION): $(AST) ast2pptx.php $(wildcard ast2pptx/*.php) Common PHPPresentation
 	@echo [ GEN] $@
 	@$(PHP) ast2pptx.php $(AST) $@ $(RESOURCE_DIRS)
 
