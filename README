@@ -1,0 +1,9 @@
+rpy-to-pptx
+===========
+
+A Ren'Py to Powerpoint converter.
+
+Usage
+-----
+1. Point the variables in the Makefile to your game directory.
+2. Run `make` and hope.
