@@ -10,19 +10,24 @@ define('PRESENTATION_HEIGHT', 720);
 ini_set('memory_limit','16G');
 
 
-if (count($argv) < 4) {
-  fwrite($stderr, "usage: " . $argv[0] . " <ast.json> <out.pptx> <resources> [<resources> ...]\n");
+if (count($argv) < 5) {
+  fwrite($stderr, "usage: " . $argv[0] . "<ast.json> <out.pptx> <site> <resources> [<resources> ...]\n");
   exit(1);
 }
 
 $astfile = $argv[1];
 $outfile = $argv[2];
-$resourceDirs = array_slice($argv, 3);
+$site = $argv[3];
+$resourceDirs = array_slice($argv, 4);
 
 $ast = json_decode(file_get_contents($astfile), true);
-if (!$ast)
+if (!$ast) {
   exit(2);
+}
 
+if ($site) {
+  AST2PPTX\loadSite($site);
+}
 $presentation = new AST2PPTX\Presentation($resourceDirs);
 $presentation->setGeometry(PRESENTATION_WIDTH, PRESENTATION_HEIGHT);
 $presentation->buildFromAST($ast);

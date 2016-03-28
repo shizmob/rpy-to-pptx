@@ -1,6 +1,7 @@
 import sys
 import glob
 import ast, atl, site
+from site import load_site
 
 
 def index(nodes):
