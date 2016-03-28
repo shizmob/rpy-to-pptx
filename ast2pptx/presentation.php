@@ -12,6 +12,19 @@ require_once 'site.php';
 
 class Presentation
 {
+  public $siteData;
+  private $presentation;
+  private $width;
+  private $height;
+
+  private $showing;
+  private $showOrder;
+  private $showUI;
+  private $transition;
+
+  private $callStack;
+  protected $stderr;
+
   public function __construct($siteData)
   {
     $this->siteData = $siteData;
@@ -38,6 +51,16 @@ class Presentation
       ->getLayout()
       ->setCX(PRESENTATION_WIDTH, DocumentLayout::UNIT_PIXEL)
       ->setCY(PRESENTATION_HEIGHT, DocumentLayout::UNIT_PIXEL);
+  }
+
+  public function getGeometry()
+  {
+    return array($this->width, $this->height);
+  }
+
+  public function getShowing()
+  {
+    return $this->showing;
   }
 
   public function buildFromAST($ast)
@@ -154,6 +177,7 @@ class Presentation
     $this->presentation->removeSlideByIndex(0);
     $writer = IOFactory::createWriter($this->presentation, 'PowerPoint2007');
     $writer->save($outfile);
+    fprintf($this->stderr, "\n");
   }
 
   protected function emitSlide($who, $what)
@@ -166,7 +190,7 @@ class Presentation
       $this->emitImage($slide, $entry);
     }
     if ($this->showUI) {
-      Site\emitUI($this->siteData, $slide, $who, $what, $this->showing);
+      Site\emitUI($this, $slide, $who, $what);
     }
 
     if ($this->transition) {

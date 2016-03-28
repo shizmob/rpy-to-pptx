@@ -1,8 +1,12 @@
 import sys
-from ast import walker
+from ast import walker, parse_text
 
 __module__ = sys.modules[__name__]
 
+
+@walker('doublespeak')
+def doublespeak(args):
+    return [{'type': 'doublesay', 'who': [args[0], args[1]], 'what': parse_text(' '.join(args[2:]))}]
 
 @walker('perform')
 def perform(args):

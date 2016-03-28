@@ -33,16 +33,20 @@ function findImagePath($resourceDirs, $pieces) {
   return isset($imageCache[$path]) ? $imageCache[$path] : null;
 }
 
-function emitUI($resourceDirs, $slide, $who, $what, $showing) {
+function emitUI($presentation, $slide, $who, $what) {
+  $resourceDirs = $presentation->siteData;
+  $showing = $presentation->getShowing();
+  list($sw, $sh) = $presentation->getGeometry();
+
   $tag = explode('_', $who)[0];
   if ($who) {
-    if (isset($showing['misc']) && strstr($showing['misc']['image'], 'phone') !== false) {
+    if (isset($showing['phone'])) {
       $bar = 'phone';
     } else if ($tag == 'oliver') {
       $bar = 'oliver';
     } else if (isset($showing[$tag])) {
       $node = $showing[$tag];
-      list($x, $y, $w, $h) = \AST2PPTX\calculateGeometry($node['image'], $node['at'], 1280, 720);
+      list($x, $y, $w, $h) = \AST2PPTX\calculateGeometry($node['image'], $node['at'], $sw, $sh);
       $x = floatval($x) + 0.5 * floatval($w);
       $xr = $x / PRESENTATION_WIDTH;
       if ($xr >= 0.8) {
