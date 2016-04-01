@@ -5,7 +5,7 @@ A Ren'Py to Powerpoint converter.
 
 Usage
 -----
-1. Point the variables in the Makefile to your game directory.
+1. Point the variables in `config.mk` to your game directory and optionally set the site override.
 2. Run `make` and hope.
 
 Site overrides
@@ -16,9 +16,11 @@ and in the visualization part (`ast2pptx`). Generally, the AST generation
 should prepare everything so that the visualization needs minimal prodding,
 which as much preprocessed as possible.
 
-For AST generation, site overrides go in `rpytoast/site.py`.
-For visualization, site overrides go in `ast2pptx/site.php`.
-See the existing Twofold demo contents for hints.
+For AST generation, site overrides go in `rpytoast/site_<site>.py`.
+For visualization, site overrides go in `ast2pptx/site_<site>.php`.
+See the existing blank and Twofold demo site overrides for hints.
+
+The site override to use can be set in `config.mk`.
 
 Limitations
 -----------
