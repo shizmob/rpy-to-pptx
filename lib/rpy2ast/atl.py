@@ -9,6 +9,8 @@ def walker(n):
     return inner
 
 def walk(s):
+    if s.__class__ not in WALKERS:
+        raise ValueError("No ATL handler defined for node type '{}'!".format(s.__class__))
     return WALKERS[s.__class__](s)
 
 

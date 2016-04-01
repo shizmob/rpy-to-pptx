@@ -13,6 +13,8 @@ def walker(n):
     return inner
 
 def walk(node):
+    if node.__class__ not in WALKERS:
+        raise ValueError("No AST handler defined for node type '{}'!".format(node.__class__))
     return WALKERS[node.__class__](node)
 
 
@@ -139,6 +141,8 @@ def python(node):
 @walker(renpy.ast.UserStatement)
 def user_statement(node):
     p = node.line.split()
+    if p[0] not in WALKERS:
+        raise ValueError("No AST handler defined for user statement type '{}'!".format(p[0]))
     return WALKERS[p[0]](p[1:])
 
 
