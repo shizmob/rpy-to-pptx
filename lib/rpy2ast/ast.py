@@ -71,6 +71,20 @@ def transform(node):
 def condition(node):
     return walk(node.entries[0][1])
 
+@walker(renpy.ast.Choice)
+def menu(node):
+    r = []
+
+    chosen = False
+    for what, _, block in node.items:
+        if not block:
+            r.append({'type': 'say', 'who': None, 'what': parse_text(what)})
+        elif not chosen:
+            chosen = True
+            r.extend(walk(block))
+
+    return r
+
 @walker(renpy.ast.Say)
 def say(node):
     return [{'type': 'say', 'who': node.who, 'what': parse_text(node.what)}]
