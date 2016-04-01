@@ -87,17 +87,18 @@ def should_filter_image(node):
 def fixup_image_defaults(node):
     SPRITE_OFFSETS = {
         'caprice': 160,
-        'mekki': 90,
-        'izaac': 80,
+        'mekki': 100,
+        'izaac': 100,
         'wallace': 175,
         'generic': 200,
         'hayley': 110,
         'lawe': 150,
         'tanya': 40,
-        'darren': 175,
-        'heather': 70,
-        'allison': 50,
-        'eileen': 70
+        'darren': 170,
+        'heather': 90,
+        'allison': 75,
+        'eileen': 95,
+        'barista': 180
     }
     if node['image'][0] == 'bg' and node['type'] != 'hide':
         at = node.get('at', {})

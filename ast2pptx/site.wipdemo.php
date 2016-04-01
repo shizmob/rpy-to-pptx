@@ -91,7 +91,7 @@ function emitUI($presentation, $slide, $who, $what) {
     $wbar->setName('whobar')->setPath($whobarpath)->setOffsetX(153)->setOffsetY(493);
   }
 
-  $textShape = $slide->createRichTextShape()->setWidth(880)->setOffsetX(200)->setOffsetY(570);
+  $textShape = $slide->createRichTextShape()->setWidth(880)->setOffsetX(200)->setOffsetY(572);
   $text = $textShape->createTextRun($what);
   $text->getFont()->setName('Set Fire To The Rain')->setSize(16)->setColor(new Color('FF352114'));
 }
