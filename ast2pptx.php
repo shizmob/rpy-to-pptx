@@ -1,9 +1,9 @@
 <?php
-require 'Common/src/Common/Autoloader.php';
-require 'PHPPresentation/src/PhpPresentation/Autoloader.php';
+require 'lib/Common/src/Common/Autoloader.php';
+require 'lib/PHPPresentation/src/PhpPresentation/Autoloader.php';
 \PhpOffice\Common\Autoloader::register();
 \PhpOffice\PhpPresentation\Autoloader::register();
-require 'ast2pptx/presentation.php';
+require 'lib/ast2pptx/presentation.php';
 
 define('PRESENTATION_WIDTH', 1280);
 define('PRESENTATION_HEIGHT', 720);
@@ -11,7 +11,7 @@ ini_set('memory_limit','16G');
 
 
 if (count($argv) < 5) {
-  fwrite($stderr, "usage: " . $argv[0] . "<ast.json> <out.pptx> <site> <resources> [<resources> ...]\n");
+  print "usage: " . $argv[0] . "<ast.json> <out.pptx> <site> <resources> [<resources> ...]\n";
   exit(1);
 }
 

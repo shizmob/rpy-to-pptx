@@ -1,8 +1,7 @@
 import sys
 import os.path
 import json
-import unrpyc
-import rpytoast
+from lib import unrpyc, rpy2ast
 
 
 if len(sys.argv) < 3:
@@ -14,7 +13,7 @@ site = sys.argv[2]
 paths = sys.argv[3:]
 
 if site:
-    rpytoast.load_site(site)
+    rpy2ast.load_site(site)
 
 scripts = []
 resource_dirs = []
@@ -34,17 +33,17 @@ for script in scripts:
         tree = unrpyc.read_ast_from_file(f)
 
     for node in tree:
-      s = rpytoast.ast.walk(node)
+      s = rpy2ast.ast.walk(node)
       nodes.extend(s)
 
 print 'Indexing into AST...'
-tree = rpytoast.index(nodes)
+tree = rpy2ast.index(nodes)
 print 'Fixing up mistakes...'
-rpytoast.fixup(tree)
+rpy2ast.fixup(tree)
 print 'Resolving references...'
-rpytoast.resolve(tree, resource_dirs)
+rpy2ast.resolve(tree, resource_dirs)
 print 'Converting to JSON-friendly format...'
-rpytoast.simplify(tree)
+rpy2ast.simplify(tree)
 print 'Writing JSON...'
 with open(outfile, 'wb') as f:
     json.dump(tree, f)

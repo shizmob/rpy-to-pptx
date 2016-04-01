@@ -1,6 +1,6 @@
-Common
-PHPPresentation
-unrpyc
+lib/Common
+lib/PHPPresentation
+lib/unrpyc
 *.pyc
 *.pptx
 *.json
